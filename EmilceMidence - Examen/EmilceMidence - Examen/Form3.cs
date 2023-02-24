@@ -16,5 +16,28 @@ namespace EmilceMidence___Examen
         {
             InitializeComponent();
         }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+            for (int i = 1; i <= 100; i++)
+            {
+                if (i % 3 == 0 && i % 5 == 0)
+                {
+                    lstNumeros.Items.Add($"{i} - Emilce Mainel Midence Calero");
+                }
+                else if (i % 3 == 0)
+                {
+                    lstNumeros.Items.Add($"{i} - Emilce");
+                }
+                else if (i % 5 == 0)
+                {
+                    lstNumeros.Items.Add($"{i} - Midence");
+                }
+                else
+                {
+                    lstNumeros.Items.Add(i.ToString());
+                }
+            }
+        }
     }
 }
