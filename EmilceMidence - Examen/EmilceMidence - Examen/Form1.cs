@@ -12,81 +12,38 @@ namespace EmilceMidence___Examen
 {
     public partial class Form1 : Form
     {
-        private List<Producto> productos = new List<Producto>(); // Lista de productos
+        private CalculadoraInteres calculadora;
 
         public Form1()
         {
             InitializeComponent();
-
-            // Configurar el grid de productos
-            gridProductos.Columns.Add("Producto", "Producto");
-            gridProductos.Columns.Add("Precio", "Precio unitario");
-            gridProductos.Columns[1].DefaultCellStyle.Format = "c";
+            calculadora = new CalculadoraInteres();
         }
 
-        private void btnAgregar_Click(object sender, EventArgs e)
+        private void btnCalcular_Click(object sender, EventArgs e)
         {
+            // Obtener el capital y la tasa de interés mensual
+            double capital = 200000.00;
+            double tasaInteresMensual = 0.015;
 
-            var formAgregarProducto = new AgregarProductoForm();
-            if (formAgregarProducto.ShowDialog() == DialogResult.OK)
+            // Recorrer los meses del año y calcular el interés mensual
+            for (int mes = 1; mes <= 12; mes++)
             {
-                var producto = formAgregarProducto.GetProducto();
-                productos.Add((Producto)producto);
-                gridProductos.Rows.Add(producto.Nombre, producto.Precio);
+                DateTime fecha = new DateTime(2023, mes, 1);
+                double interesMensual = calculadora.CalcularInteresMensual(capital, tasaInteresMensual);
+                string resultado = string.Format("{0} - L {1:N2}", fecha.ToString("MMMM"), interesMensual);
+                lstIntereses.Items.Add(resultado);
             }
         }
 
-        private async void btnCalcular_Click(object sender, EventArgs e)
-        {
-            double totalVenta = CalcularTotalVenta(); // Calcular el total de la venta
-
-            lblTotalVenta.Text = $"Total de venta: {totalVenta:c}";
-            lblDescuento.Text = "Calculando descuento del 15%...";
-
-            double totalConDescuento = await CalcularDescuentoAsync(totalVenta, 0.15); // Llamada a la función asincrónica
-
-            lblDescuento.Text = $"Descuento del 15%: {totalVenta * 0.15:c}";
-            lblTotalConDescuento.Text = $"Total con descuento: {totalConDescuento:c}";
-        }
-
-        private double CalcularTotalVenta()
-        {
-            double totalVenta = 0;
-
-            foreach (var producto in productos)
-            {
-                totalVenta += producto.Precio;
-            }
-
-            return totalVenta;
-        }
-
-        static async Task<double> CalcularDescuentoAsync(double totalVenta, double porcentajeDescuento)
-        {
-            await Task.Delay(2000);
-
-            double descuento = totalVenta * porcentajeDescuento;
-            double totalConDescuento = totalVenta - descuento;
-
-            return totalConDescuento;
-        }
     }
 
-    public class Producto
+    public class CalculadoraInteres
     {
-        public string Nombre { get; set; }
-        public double Precio { get; set; }
-    }
-
-    public class AgregarProductoForm : Form
-    {
-        private TextBox txtNombre;
-        private NumericUpDown numPrecio;
-        private Button btnAceptar;
-
-        internal object GetProducto()
+        public double CalcularInteresMensual(double capital, double tasaInteresMensual)
         {
-            throw new NotImplementedException();
+            return capital * tasaInteresMensual;
         }
     }
 }
+
