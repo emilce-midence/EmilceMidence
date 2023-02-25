@@ -13,38 +13,53 @@ namespace EmilceMidence___Examen
 {
     public partial class Form1 : Form
     {
+        private const double TASA_INTERES_MENSUAL = 0.015;
+        private const double CAPITAL_INICIAL = 200000;
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void btnCalcular_Click_1(object sender, EventArgs e)
+        private void btnCalcular_Click(object sender, EventArgs e)
         {
-            // Obtener el capital inicial y la tasa de interés mensual
-            double capital = 200000.00;
-            double tasa = 0.015;
-
-            // Crear un arreglo para almacenar los nombres de los meses
-            string[] meses = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
-
             // Limpiar el ListBox
-            lstInteres.Items.Clear();
+            lstIntereses.Items.Clear();
 
-            // Calcular y mostrar el interés por mes
-            for (int i = 0; i < 12; i++)
+            // Calcular el interés para cada mes y mostrar los resultados en el ListBox
+            for (int i = 1; i <= 12; i++)
             {
-                // Calcular el interés mensual
-                double interes = capital * tasa;
-
-                // Agregar el resultado al ListBox
-                lstInteres.Items.Add(meses[i] + ": L " + interes.ToString("0.00"));
-
-                // Actualizar el capital para el siguiente mes
-                capital += interes;
+                double interes = CalcularInteresMensual(i);
+                string mes = ObtenerNombreMes(i);
+                string item = mes + ": L " + interes.ToString("0.00");
+                lstIntereses.Items.Add(item);
             }
         }
+
+        private double CalcularInteresMensual(int mes)
+        {
+            // Calcular el tiempo en meses desde enero de 2023
+            int mesesDesdeEnero2023 = (mes - 1);
+
+            // Calcular el período de tiempo en años para el cálculo del interés
+            double periodo = mesesDesdeEnero2023 / 12.0;
+
+            // Calcular el interés mensual
+            double interes = CAPITAL_INICIAL * TASA_INTERES_MENSUAL * periodo;
+
+            return interes;
+        }
+
+        private string ObtenerNombreMes(int mes)
+        {
+            // Obtener el nombre del mes en función de su número
+            string[] nombresMeses = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+            string nombreMes = nombresMeses[mes - 1];
+            return nombreMes;
+        }
+
     }
 
 }
+
 

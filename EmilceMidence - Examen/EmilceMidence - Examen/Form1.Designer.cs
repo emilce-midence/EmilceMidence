@@ -29,17 +29,17 @@ namespace EmilceMidence___Examen
         /// </summary>
         private void InitializeComponent()
         {
-            this.lstInteres = new System.Windows.Forms.ListBox();
+            this.lstIntereses = new System.Windows.Forms.ListBox();
             this.btnCalcular = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // lstInteres
+            // lstIntereses
             // 
-            this.lstInteres.FormattingEnabled = true;
-            this.lstInteres.Location = new System.Drawing.Point(62, 40);
-            this.lstInteres.Name = "lstInteres";
-            this.lstInteres.Size = new System.Drawing.Size(120, 95);
-            this.lstInteres.TabIndex = 0;
+            this.lstIntereses.FormattingEnabled = true;
+            this.lstIntereses.Location = new System.Drawing.Point(62, 40);
+            this.lstIntereses.Name = "lstIntereses";
+            this.lstIntereses.Size = new System.Drawing.Size(120, 95);
+            this.lstIntereses.TabIndex = 0;
             // 
             // btnCalcular
             // 
@@ -49,7 +49,6 @@ namespace EmilceMidence___Examen
             this.btnCalcular.TabIndex = 1;
             this.btnCalcular.Text = "Calculo";
             this.btnCalcular.UseVisualStyleBackColor = true;
-            this.btnCalcular.Click += new System.EventHandler(this.btnCalcular_Click_1);
             // 
             // Form1
             // 
@@ -57,7 +56,7 @@ namespace EmilceMidence___Examen
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btnCalcular);
-            this.Controls.Add(this.lstInteres);
+            this.Controls.Add(this.lstIntereses);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -66,7 +65,7 @@ namespace EmilceMidence___Examen
 
         #endregion
 
-        private System.Windows.Forms.ListBox lstInteres;
+        private System.Windows.Forms.ListBox lstIntereses;
         private System.Windows.Forms.Button btnCalcular;
     }
 }

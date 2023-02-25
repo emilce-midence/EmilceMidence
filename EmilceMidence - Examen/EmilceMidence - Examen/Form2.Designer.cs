@@ -29,22 +29,22 @@ namespace EmilceMidence___Examen
         /// </summary>
         private void InitializeComponent()
         {
-            this.gridProductos = new System.Windows.Forms.DataGridView();
+            this.dgvProductos = new System.Windows.Forms.DataGridView();
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnCalcular = new System.Windows.Forms.Button();
             this.lblTotalVenta = new System.Windows.Forms.Label();
             this.lblDescuento = new System.Windows.Forms.Label();
             this.lblTotalConDescuento = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.gridProductos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).BeginInit();
             this.SuspendLayout();
             // 
-            // gridProductos
+            // dgvProductos
             // 
-            this.gridProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridProductos.Location = new System.Drawing.Point(53, 24);
-            this.gridProductos.Name = "gridProductos";
-            this.gridProductos.Size = new System.Drawing.Size(287, 149);
-            this.gridProductos.TabIndex = 0;
+            this.dgvProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvProductos.Location = new System.Drawing.Point(53, 24);
+            this.dgvProductos.Name = "dgvProductos";
+            this.dgvProductos.Size = new System.Drawing.Size(287, 149);
+            this.dgvProductos.TabIndex = 0;
             // 
             // btnAgregar
             // 
@@ -54,7 +54,6 @@ namespace EmilceMidence___Examen
             this.btnAgregar.TabIndex = 1;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
-            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // btnCalcular
             // 
@@ -64,7 +63,6 @@ namespace EmilceMidence___Examen
             this.btnCalcular.TabIndex = 2;
             this.btnCalcular.Text = "Calcular";
             this.btnCalcular.UseVisualStyleBackColor = true;
-            this.btnCalcular.Click += new System.EventHandler(this.btnCalcular_Click);
             // 
             // lblTotalVenta
             // 
@@ -103,10 +101,10 @@ namespace EmilceMidence___Examen
             this.Controls.Add(this.lblTotalVenta);
             this.Controls.Add(this.btnCalcular);
             this.Controls.Add(this.btnAgregar);
-            this.Controls.Add(this.gridProductos);
+            this.Controls.Add(this.dgvProductos);
             this.Name = "Form2";
             this.Text = "Form2";
-            ((System.ComponentModel.ISupportInitialize)(this.gridProductos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -114,7 +112,7 @@ namespace EmilceMidence___Examen
 
         #endregion
 
-        private System.Windows.Forms.DataGridView gridProductos;
+        private System.Windows.Forms.DataGridView dgvProductos;
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnCalcular;
         private System.Windows.Forms.Label lblTotalVenta;

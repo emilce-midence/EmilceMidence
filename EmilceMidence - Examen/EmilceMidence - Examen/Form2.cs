@@ -16,42 +16,56 @@ namespace EmilceMidence___Examen
         public Form2()
         {
             InitializeComponent();
-
         }
 
         private async void btnCalcular_Click(object sender, EventArgs e)
         {
-            List<string> nombresProductos = new List<string>();
-            List<decimal> preciosProductos = new List<decimal>();
-            for (int i = 1; i <= 10; i++)
+            // Obtener los datos de los productos del DataGridView
+            BindingList<Producto> productos = new BindingList<Producto>();
+            foreach (DataGridViewRow row in dgvProductos.Rows)
             {
-                TextBox nombreProducto = Controls.Find($"NombreProducto{i}", true).FirstOrDefault() as TextBox;
-                TextBox precioProducto = Controls.Find($"PrecioProducto{i}", true).FirstOrDefault() as TextBox;
-
-                if (nombreProducto.Text != "" && precioProducto.Text != "")
+                if (!row.IsNewRow)
                 {
-                    nombresProductos.Add(nombreProducto.Text);
-                    preciosProductos.Add(decimal.Parse(precioProducto.Text));
+                    Producto producto = new Producto();
+                    producto.Nombre = row.Cells[0].Value.ToString();
+                    producto.PrecioUnitario = Convert.ToDouble(row.Cells[1].Value);
+                    productos.Add(producto);
                 }
             }
 
+            // Calcular el total de la factura
+            double total = 0;
+            foreach (Producto producto in productos)
+            {
+                total += producto.PrecioUnitario;
+            }
 
-            decimal totalSinDescuento = preciosProductos.Sum();
-            decimal descuento = await CalcularDescuento(totalSinDescuento);
-            decimal totalConDescuento = totalSinDescuento - descuento;
+            // Calcular el descuento asíncrono
+            double descuento = await CalcularDescuentoAsync(total);
 
-            MessageBox.Show($"Total sin descuento: L {totalSinDescuento}\nDescuento del 15%: L {descuento}\nTotal a pagar: L {totalConDescuento}");
+            // Mostrar los resultados en etiquetas de texto
+            lblDescuento.Text = "Descuento del 15%: L " + descuento.ToString("0.00");
+            lblTotalConDescuento.Text = "Total a pagar: L " + (total - descuento).ToString("0.00");
         }
 
-        private async Task<decimal> CalcularDescuento(decimal total)
+        private async System.Threading.Tasks.Task<double> CalcularDescuentoAsync(double total)
         {
-            await Task.Delay(1000);
-            return total * 0.15m;
+            // Simular una espera de 1 segundo para demostrar la asincronía
+            await System.Threading.Tasks.Task.Delay(1000);
+
+            // Calcular el descuento del 15%
+            double descuento = total * 0.15;
+
+            // Devolver el resultado
+            return descuento;
         }
 
-        private void btnAgregar_Click(object sender, EventArgs e)
-        {
+    }
 
-        }
+    public class Producto
+    {
+        public string Nombre { get; set; }
+        public double PrecioUnitario { get; set; }
     }
 }
+
