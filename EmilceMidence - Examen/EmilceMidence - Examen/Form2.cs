@@ -48,7 +48,7 @@ namespace EmilceMidence___Examen
         private List<Producto> ObtenerProductos()
         {
             // Aquí se podría implementar la lógica para obtener los productos y sus precios unitarios.
-            // Se utiliza una lista predefinida para simplificar el código.
+            // Utilizare una lista predefinida para simplificar el código.
             return new List<Producto>()
     {
         new Producto() { Nombre = "Producto 1", PrecioUnitario = 100.00 },
