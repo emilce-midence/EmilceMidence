@@ -58,6 +58,11 @@ namespace EmilceMidence___Examen
             return nombreMes;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form2 miforma = new Form2();
+            miforma.Show();
+        }
     }
 
 }

@@ -13,62 +13,78 @@ namespace EmilceMidence___Examen
 
     public partial class Form2 : Form
     {
-        public Form2()
-        {
-        }
 
         public Form2(object products)
         {
             InitializeComponent();
-
         }
 
-        private async Task<decimal> CalcularDescuentoAsync(Dictionary<string, decimal> productos)
+        public Form2()
         {
-            // Calculamos el total de la compra
-            decimal total = productos.Sum(p => p.Value);
+        }
 
-            // Esperamos un segundo para simular una operación larga
-            await Task.Delay(1000);
+        private void btnCalcular_Click(object sender, EventArgs e)
+        {
+            CalcularDescuento();
+        }
 
-            // Calculamos el descuento del 15%
-            decimal descuento = total * 0.15m;
+        private async void CalcularDescuento()
+        {
+            List<Producto> productos = ObtenerProductos();
+            double total = CalcularTotal(productos);
 
-            // Devolvemos el descuento
+            try
+            {
+                double descuento = await CalcularDescuentoAsync(total);
+                double totalPagar = total - descuento;
+                MessageBox.Show($"Descuento aplicado: L {descuento:N2}\nTotal a pagar: L {totalPagar:N2}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al calcular descuento: {ex.Message}");
+            }
+        }
+
+        private List<Producto> ObtenerProductos()
+        {
+            // Aquí se podría implementar la lógica para obtener los productos y sus precios unitarios.
+            // Se utiliza una lista predefinida para simplificar el código.
+            return new List<Producto>()
+    {
+        new Producto() { Nombre = "Producto 1", PrecioUnitario = 100.00 },
+        new Producto() { Nombre = "Producto 2", PrecioUnitario = 150.00 },
+        new Producto() { Nombre = "Producto 3", PrecioUnitario = 200.00 }
+    };
+        }
+
+        private double CalcularTotal(List<Producto> productos)
+        {
+            double total = 0.0;
+            foreach (Producto producto in productos)
+            {
+                total += producto.PrecioUnitario;
+            }
+            return total;
+        }
+
+        private async Task<double> CalcularDescuentoAsync(double total)
+        {
+            await Task.Delay(500); // Simular una operación asíncrona.
+
+            double descuento = total * 0.15;
             return descuento;
         }
 
-        private async void btnCalcular_Click(object sender, EventArgs e)
+        class Producto
         {
-            // Creamos un diccionario para almacenar los productos y sus precios unitarios
-            var productos = new Dictionary<string, decimal>();
-
-            // Recorremos los TextBoxes para obtener los nombres de los productos y sus precios unitarios
-            foreach (var control in this.Controls)
-            {
-                if (control is TextBox textBox && !string.IsNullOrWhiteSpace(textBox.Text))
-                {
-                    decimal precio;
-                    if (decimal.TryParse(textBox.Text, out precio))
-                    {
-                        productos[textBox.Name] = precio;
-                    }
-                }
-            }
-
-            // Calculamos el descuento de forma asíncrona
-            decimal descuento = await CalcularDescuentoAsync(productos);
-
-            // Calculamos el total a pagar
-            decimal total = productos.Sum(p => p.Value) - descuento;
-
-            // Mostramos el resultado en el Label
-            lblResultado.Text = $"Descuento: ${descuento:N2}\nTotal a pagar: ${total:N2}";
+            public string Nombre { get; set; }
+            public double PrecioUnitario { get; set; }
         }
 
-        private object textBox1_TextChanged(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            CalcularDescuentoAsync;
+            Form3 miforma = new Form3();
+            miforma.Show();
         }
     }
 }

@@ -31,6 +31,7 @@ namespace EmilceMidence___Examen
         {
             this.lstIntereses = new System.Windows.Forms.ListBox();
             this.btnCalcular = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lstIntereses
@@ -50,11 +51,22 @@ namespace EmilceMidence___Examen
             this.btnCalcular.Text = "Calculo";
             this.btnCalcular.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(259, 235);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Siguiente Form";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnCalcular);
             this.Controls.Add(this.lstIntereses);
             this.Name = "Form1";
@@ -67,5 +79,6 @@ namespace EmilceMidence___Examen
 
         private System.Windows.Forms.ListBox lstIntereses;
         private System.Windows.Forms.Button btnCalcular;
+        private System.Windows.Forms.Button button1;
     }
 }
