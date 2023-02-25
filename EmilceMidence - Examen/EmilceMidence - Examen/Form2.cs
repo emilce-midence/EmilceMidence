@@ -10,62 +10,66 @@ using System.Windows.Forms;
 
 namespace EmilceMidence___Examen
 {
+
     public partial class Form2 : Form
     {
-
         public Form2()
         {
+        }
+
+        public Form2(object products)
+        {
             InitializeComponent();
+
+        }
+
+        private async Task<decimal> CalcularDescuentoAsync(Dictionary<string, decimal> productos)
+        {
+            // Calculamos el total de la compra
+            decimal total = productos.Sum(p => p.Value);
+
+            // Esperamos un segundo para simular una operación larga
+            await Task.Delay(1000);
+
+            // Calculamos el descuento del 15%
+            decimal descuento = total * 0.15m;
+
+            // Devolvemos el descuento
+            return descuento;
         }
 
         private async void btnCalcular_Click(object sender, EventArgs e)
         {
-            // Obtener los datos de los productos del DataGridView
-            BindingList<Producto> productos = new BindingList<Producto>();
-            foreach (DataGridViewRow row in dgvProductos.Rows)
+            // Creamos un diccionario para almacenar los productos y sus precios unitarios
+            var productos = new Dictionary<string, decimal>();
+
+            // Recorremos los TextBoxes para obtener los nombres de los productos y sus precios unitarios
+            foreach (var control in this.Controls)
             {
-                if (!row.IsNewRow)
+                if (control is TextBox textBox && !string.IsNullOrWhiteSpace(textBox.Text))
                 {
-                    Producto producto = new Producto();
-                    producto.Nombre = row.Cells[0].Value.ToString();
-                    producto.PrecioUnitario = Convert.ToDouble(row.Cells[1].Value);
-                    productos.Add(producto);
+                    decimal precio;
+                    if (decimal.TryParse(textBox.Text, out precio))
+                    {
+                        productos[textBox.Name] = precio;
+                    }
                 }
             }
 
-            // Calcular el total de la factura
-            double total = 0;
-            foreach (Producto producto in productos)
-            {
-                total += producto.PrecioUnitario;
-            }
+            // Calculamos el descuento de forma asíncrona
+            decimal descuento = await CalcularDescuentoAsync(productos);
 
-            // Calcular el descuento asíncrono
-            double descuento = await CalcularDescuentoAsync(total);
+            // Calculamos el total a pagar
+            decimal total = productos.Sum(p => p.Value) - descuento;
 
-            // Mostrar los resultados en etiquetas de texto
-            lblDescuento.Text = "Descuento del 15%: L " + descuento.ToString("0.00");
-            lblTotalConDescuento.Text = "Total a pagar: L " + (total - descuento).ToString("0.00");
+            // Mostramos el resultado en el Label
+            lblResultado.Text = $"Descuento: ${descuento:N2}\nTotal a pagar: ${total:N2}";
         }
 
-        private async System.Threading.Tasks.Task<double> CalcularDescuentoAsync(double total)
+        private object textBox1_TextChanged(object sender, EventArgs e)
         {
-            // Simular una espera de 1 segundo para demostrar la asincronía
-            await System.Threading.Tasks.Task.Delay(1000);
-
-            // Calcular el descuento del 15%
-            double descuento = total * 0.15;
-
-            // Devolver el resultado
-            return descuento;
+            CalcularDescuentoAsync;
         }
-
-    }
-
-    public class Producto
-    {
-        public string Nombre { get; set; }
-        public double PrecioUnitario { get; set; }
     }
 }
 
