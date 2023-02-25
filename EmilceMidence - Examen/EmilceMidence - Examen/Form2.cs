@@ -12,81 +12,46 @@ namespace EmilceMidence___Examen
 {
     public partial class Form2 : Form
     {
-        private List<Producto> productos = new List<Producto>(); // Lista de productos
 
         public Form2()
         {
             InitializeComponent();
 
-            // Configurar el grid de productos
-            gridProductos.Columns.Add("Producto", "Producto");
-            gridProductos.Columns.Add("Precio", "Precio unitario");
-            gridProductos.Columns[1].DefaultCellStyle.Format = "c";
+        }
+
+        private async void btnCalcular_Click(object sender, EventArgs e)
+        {
+            List<string> nombresProductos = new List<string>();
+            List<decimal> preciosProductos = new List<decimal>();
+            for (int i = 1; i <= 10; i++)
+            {
+                TextBox nombreProducto = Controls.Find($"NombreProducto{i}", true).FirstOrDefault() as TextBox;
+                TextBox precioProducto = Controls.Find($"PrecioProducto{i}", true).FirstOrDefault() as TextBox;
+
+                if (nombreProducto.Text != "" && precioProducto.Text != "")
+                {
+                    nombresProductos.Add(nombreProducto.Text);
+                    preciosProductos.Add(decimal.Parse(precioProducto.Text));
+                }
+            }
+
+
+            decimal totalSinDescuento = preciosProductos.Sum();
+            decimal descuento = await CalcularDescuento(totalSinDescuento);
+            decimal totalConDescuento = totalSinDescuento - descuento;
+
+            MessageBox.Show($"Total sin descuento: L {totalSinDescuento}\nDescuento del 15%: L {descuento}\nTotal a pagar: L {totalConDescuento}");
+        }
+
+        private async Task<decimal> CalcularDescuento(decimal total)
+        {
+            await Task.Delay(1000);
+            return total * 0.15m;
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
 
-            var formAgregarProducto = new AgregarProductoForm();
-            if (formAgregarProducto.ShowDialog() == DialogResult.OK)
-            {
-                var producto = formAgregarProducto.GetProducto();
-                productos.Add((Producto)producto);
-                gridProductos.Rows.Add(producto.Nombre, producto.Precio);
-            }
-        }
-
-        private async void btnCalcular_Click(object sender, EventArgs e)
-        {
-            double totalVenta = CalcularTotalVenta(); // Calcular el total de la venta
-
-            lblTotalVenta.Text = $"Total de venta: {totalVenta:c}";
-            lblDescuento.Text = "Calculando descuento del 15%...";
-
-            double totalConDescuento = await CalcularDescuentoAsync(totalVenta, 0.15); // Llamada a la función asincrónica
-
-            lblDescuento.Text = $"Descuento del 15%: {totalVenta * 0.15:c}";
-            lblTotalConDescuento.Text = $"Total con descuento: {totalConDescuento:c}";
-        }
-
-        private double CalcularTotalVenta()
-        {
-            double totalVenta = 0;
-
-            foreach (var producto in productos)
-            {
-                totalVenta += producto.Precio;
-            }
-
-            return totalVenta;
-        }
-
-        static async Task<double> CalcularDescuentoAsync(double totalVenta, double porcentajeDescuento)
-        {
-            await Task.Delay(2000);
-
-            double descuento = totalVenta * porcentajeDescuento;
-            double totalConDescuento = totalVenta - descuento;
-
-            return totalConDescuento;
-        }
-    }
-
-    public class Producto
-    {
-        public string Nombre { get; set; }
-        public double Precio { get; set; }
-    }
-
-    public class AgregarProductoForm : Form
-    {
-        private TextBox txtNombre;
-        private NumericUpDown numPrecio;
-        private Button btnAceptar;
-
-        internal object GetProducto()
-        {
-            throw new NotImplementedException();
         }
     }
 }

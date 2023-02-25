@@ -64,6 +64,7 @@ namespace EmilceMidence___Examen
             this.btnCalcular.TabIndex = 2;
             this.btnCalcular.Text = "Calcular";
             this.btnCalcular.UseVisualStyleBackColor = true;
+            this.btnCalcular.Click += new System.EventHandler(this.btnCalcular_Click);
             // 
             // lblTotalVenta
             // 
@@ -104,7 +105,7 @@ namespace EmilceMidence___Examen
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.gridProductos);
             this.Name = "Form2";
-            this.Text = "Form1";
+            this.Text = "Form2";
             ((System.ComponentModel.ISupportInitialize)(this.gridProductos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

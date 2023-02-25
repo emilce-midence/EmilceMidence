@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,38 +13,38 @@ namespace EmilceMidence___Examen
 {
     public partial class Form1 : Form
     {
-        private CalculadoraInteres calculadora;
 
         public Form1()
         {
             InitializeComponent();
-            calculadora = new CalculadoraInteres();
         }
 
-        private void btnCalcular_Click(object sender, EventArgs e)
+        private void btnCalcular_Click_1(object sender, EventArgs e)
         {
-            // Obtener el capital y la tasa de interés mensual
+            // Obtener el capital inicial y la tasa de interés mensual
             double capital = 200000.00;
-            double tasaInteresMensual = 0.015;
+            double tasa = 0.015;
 
-            // Recorrer los meses del año y calcular el interés mensual
-            for (int mes = 1; mes <= 12; mes++)
+            // Crear un arreglo para almacenar los nombres de los meses
+            string[] meses = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+
+            // Limpiar el ListBox
+            lstInteres.Items.Clear();
+
+            // Calcular y mostrar el interés por mes
+            for (int i = 0; i < 12; i++)
             {
-                DateTime fecha = new DateTime(2023, mes, 1);
-                double interesMensual = calculadora.CalcularInteresMensual(capital, tasaInteresMensual);
-                string resultado = string.Format("{0} - L {1:N2}", fecha.ToString("MMMM"), interesMensual);
-                lstIntereses.Items.Add(resultado);
+                // Calcular el interés mensual
+                double interes = capital * tasa;
+
+                // Agregar el resultado al ListBox
+                lstInteres.Items.Add(meses[i] + ": L " + interes.ToString("0.00"));
+
+                // Actualizar el capital para el siguiente mes
+                capital += interes;
             }
         }
-
     }
 
-    public class CalculadoraInteres
-    {
-        public double CalcularInteresMensual(double capital, double tasaInteresMensual)
-        {
-            return capital * tasaInteresMensual;
-        }
-    }
 }
 
